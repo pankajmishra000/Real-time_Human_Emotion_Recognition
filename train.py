@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Mar 31 20:24:25 2020
+
+@author: pankaj.mishra
+"""
+
+
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
@@ -102,7 +110,7 @@ class DataSet(torch.utils.data.Dataset):
 
 def main():
     # variables  -------------
-    batch_size = 10
+    batch_size = 120
     lr = 0.01
     epochs = 500
     learning_rate_decay_start = 80
@@ -115,7 +123,7 @@ def main():
     if not torch.cuda.is_available():
         summary(network, (1, shape[0], shape[1]))
 
-    optimizer = torch.optim.Adam(network.parameters(), lr=lr, momentum=0.9, weight_decay=5e-3)
+    optimizer = torch.optim.Adam(network.parameters(), lr=lr, weight_decay=5e-3)
     criterion = nn.CrossEntropyLoss()
     factory = DataSetFactory()
 

@@ -1,4 +1,12 @@
-# see https://github.com/kazuto1011/grad-cam-pytorch
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Mar 31 20:24:25 2020
+
+@author: pankaj.mishra
+Reference: https://github.com/kazuto1011/grad-cam-pytorch
+"""
+
+
 
 from collections import OrderedDict
 
