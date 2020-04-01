@@ -18,7 +18,7 @@ Datset can be downloaded from kaggle (link below) and copy the extracted `fer201
   `os`<b>
 
 
-# 2. Use SSIM
+# 2. Use Command Line
 
 *Cross entropy loss is used to train the resnet artitecture.*
 Command Line execution for the realtime testing can be done bby executing-
