@@ -13,23 +13,30 @@ import numpy as np
 import argparse
 import imutils
 import cv2
+import model as mdl
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-c", "--cascade", required=True,help="path to where the face cascade resides")
-ap.add_argument("-m", "--model", required=True,help="path to pre-trained emotion detector CNN")
+ap.add_argument("-c", "--cascade", required=False,default = './visualize/haarcascade_frontalface_default.xml',help="path to where the face cascade resides")
+ap.add_argument("-m", "--model", required=False, default= './public_model_414_55.pt',help="path to pre-trained emotion detector CNN")
 ap.add_argument("-v", "--video",help="path to the (optional) video file")
 args = vars(ap.parse_args())
+
+EMOTIONS = ["angry", "scared", "happy", "sad", "surprised","neutral"]
+ 
 
 # load the face detector cascade, emotion detection CNN, then define
 # the list of emotion labels
 detector = cv2.CascadeClassifier(args["cascade"])
-model = load_model(args["model"])
-EMOTIONS = ["angry", "scared", "happy", "sad", "surprised","neutral"]
+
+model = mdl.Model(num_classes=len(EMOTIONS))
+model.load_state_dict(torch.load(args["model"]))
+model.eval()
+
 
 # if a video path was not supplied, grab the reference to the webcam
 if not args.get("video", False):
-    camera = cv2.VideoCapture(1)
+    camera = cv2.VideoCapture(0)
 # otherwise, load the video
 else:
     camera = cv2.VideoCapture(args["video"])
@@ -65,16 +72,18 @@ while True:
 # it for the network
         roi = gray[fY:fY + fH, fX:fX + fW]
         roi = cv2.resize(roi, (48, 48))
-        roi = roi.astype("float") / 255.0
+        roi = roi/ 255.0
 #        roi = img_to_array(roi)
-        roi = roi.permute(1,2,0).numpy() ## Changin the numpy array
+#        roi = roi.permute(1,2,0).numpy() ## Changin the numpy array
         roi = np.expand_dims(roi, axis=0)
         
 ## Making prediction
         # make a prediction on the ROI, then lookup the class
         # label
-        preds = model.predict(roi)[0]
-        label = EMOTIONS[preds.argmax()]
+        with torch.no_grad():
+            preds = model(torch.as_tensor(roi,dtype=torch.float).unsqueeze(0)).cpu().numpy().reshape(-1).tolist()
+        label = EMOTIONS[np.argmax(preds)]
+        
         # loop over the labels + probabilities and draw them
     for (i, (emotion, prob)) in enumerate(zip(EMOTIONS, preds)):
         # construct the label text
