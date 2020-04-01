@@ -1,16 +1,11 @@
 # pytorch-Realtime-facial-expression-recognition.
 
+![Human Emotions](./runs/emotion.PNG)
 
 ## Work is done for fun, so don't ask to fork it and use it for your purposes.
 
 # Real-Time Sample Results
-<!-- blank line -->
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="runs/emotion.PNG">
-    <source src="./runs/human_emotion_recog_realtime.mp4" type="video/mp4">
-  </video>
-</figure>
-<!-- blank line -->
+![Real time emotion Recognition](runs/human_emotion_recog_realtime.gif)
 
 # Dataset
 Datset can be downloaded from kaggle (link below) and copy the extracted `fer2013.csv` file in folder fer2013.
