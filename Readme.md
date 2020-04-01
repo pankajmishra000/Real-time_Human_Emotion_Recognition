@@ -5,7 +5,7 @@
 ## Work is done for fun, so don't ask to fork it and use it for your purposes.
 
 # Real-Time Sample Results
-![Real time emotion Recognition](runs/human_emotion_recog_realtime.gif = 200x200)
+![Real time emotion Recognition](runs/human_emotion_recog_realtime.gif){ width=50% }
 
 # Dataset
 Datset can be downloaded from kaggle (link below) and copy the extracted `fer2013.csv` file in folder fer2013.
