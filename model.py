@@ -6,6 +6,7 @@ Created on Tue Mar 31 20:24:25 2020
 """
 
 import torch.nn as nn
+import torch.nn.functional as F
 
 
 class SeparableConv2d(nn.Module):
@@ -86,6 +87,6 @@ class Model(nn.Module):
         x = self.module3(x)
         x = self.module4(x)
         x = self.last_conv(x)
-        x = self.avgp(x)
+        x = F.softmax(self.avgp(x))
         x = x.view((x.shape[0], -1))
         return x
